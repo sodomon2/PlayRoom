@@ -1,8 +1,13 @@
 #!/usr/bin/env lua
 
-lgi       = require 'lgi'             -- La libreria que me permitira usar GTK
-GObject   = lgi.GObject               -- Parte de lgi
-Gtk       = lgi.require('Gtk', '3.0') -- El objeto GTK
+require 'libraries.middleclass'
+utils     = require 'libraries.utils'
+inifile   = require 'libraries.inifile'
+
+lgi       = require 'lgi'
+GLib	  = lgi.GLib
+GObject   = lgi.GObject
+Gtk       = lgi.require('Gtk', '3.0')
 Gst       = lgi.require("Gst", "1.0")
 
 builder   = Gtk.Builder()
@@ -10,6 +15,10 @@ app		  = Gtk.Application()
 
 builder:add_from_file('MoonAudio.ui')
 ui = builder.objects
+
+utils:create_config('MoonAudio','moonaudio.ini')
+dir 				= ('%s/MoonAudio'):format(GLib.get_user_config_dir())
+conf				= inifile:load(('%s/moonaudio.ini'):format(dir))
 
 function quit()
 	Gtk.main_quit()
