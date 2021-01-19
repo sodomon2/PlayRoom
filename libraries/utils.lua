@@ -10,7 +10,7 @@ local utils = class('utils')
 
 function utils:create_config(dir,file)
 	local config_dir = ('%s/%s'):format(GLib.get_user_config_dir(), dir)
-	if not utils:isfile(('%s/moonaudio.ini'):format(config_dir)) then
+	if not utils:isfile(('%s/%s'):format(config_dir,file)) then
 		os.execute( ('mkdir -p %s'):format(config_dir) )
 		os.execute( ('cp %s %s'):format(file,config_dir) )
 	end
