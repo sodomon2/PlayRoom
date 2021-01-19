@@ -21,9 +21,11 @@ dir 				= ('%s/MoonAudio'):format(GLib.get_user_config_dir())
 conf				= inifile:load(('%s/moonaudio.ini'):format(dir))
 
 require('src.moonaudio-playlist')
+require('src.moonaudio-app')
 
 function quit()
 	Gtk.main_quit()
+	main_loop:quit()
 	os.exit(0)
 end 
 
