@@ -1,8 +1,8 @@
 --[[--
- @package   MoonAudio
- @filename  utils.lua  
+ @package   PlayRoom
+ @filename  utils.lua
  @version   1.0
- @author    Diaz Urbaneja Victor Diego Alejandro <sodomon2@gmail.com> 
+ @author    Diaz Urbaneja Victor Diego Alejandro <sodomon2@gmail.com>
  @date      01.08.2020 19:22:11 -04
 --]]
 

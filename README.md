@@ -1,5 +1,5 @@
-# MoonAudio
-MoonAudio is a simple media player in lua
+# PlayRoom
+PlayRoom is a simple media player in lua
 
 # Screenshot
 

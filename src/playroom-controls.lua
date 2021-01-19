@@ -1,6 +1,6 @@
 --[[--
- @package   MoonAudio
- @filename  moonaudio-controls.lua
+ @package   PlayRoom
+ @filename  playroom-controls.lua
  @version   1.0
  @autor     The Moonsteal Team
  @date      18.01.2021 22:30:02 -04
@@ -18,7 +18,7 @@ function ui.volume_control:on_value_changed()
 	end
 	play.volume = conf.general.volume
 	print( value )
-	inifile:save(('%s/moonaudio.ini'):format(dir), conf)
+	inifile:save(('%s/playroom.ini'):format(dir), conf)
 end
 
 

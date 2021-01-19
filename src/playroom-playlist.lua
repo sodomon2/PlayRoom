@@ -1,6 +1,6 @@
 --[[--
- @package   MoonAudio
- @filename  moonaudio-playlist.lua
+ @package   PlayRoom
+ @filename  playroom-playlist.lua
  @version   1.0
  @autor     The Moonsteal Team
  @date      18.01.2021 20:05:49 -04
@@ -41,7 +41,7 @@ end
 function ui.btn_dialog_settings_ok:on_clicked()
 	list_view()
 	conf.general.playlist = ui.entry_directory.text
-	inifile:save(('%s/moonaudio.ini'):format(dir), conf)
+	inifile:save(('%s/playroom.ini'):format(dir), conf)
 	ui.dialog_settings:hide()
 end
 

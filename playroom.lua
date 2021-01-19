@@ -1,8 +1,8 @@
 #!/usr/bin/env lua
 
 --[[--
- @package   MoonAudio
- @filename  moonaudio.lua
+ @package   PlayRoom
+ @filename  playroom.lua
  @version   1.0
  @autor     The Moonsteal Team
  @date      18.01.2021 19:09:28 -04
@@ -25,16 +25,16 @@ end
 builder   = Gtk.Builder()
 app		  = Gtk.Application()
 
-builder:add_from_file('MoonAudio.ui')
+builder:add_from_file('Playroom.ui')
 ui = builder.objects
 
-utils:create_config('MoonAudio','moonaudio.ini')
-dir 				= ('%s/MoonAudio'):format(GLib.get_user_config_dir())
-conf				= inifile:load(('%s/moonaudio.ini'):format(dir))
+utils:create_config('playroom','playroom.ini')
+dir 				= ('%s/playroom'):format(GLib.get_user_config_dir())
+conf				= inifile:load(('%s/playroom.ini'):format(dir))
 
-require('src.moonaudio-playlist')
-require('src.moonaudio-app')
-require('src.moonaudio-controls')
+require('src.playroom-playlist')
+require('src.playroom-app')
+require('src.playroom-controls')
 
 function ui.btn_about:on_clicked()
 	ui.about_window:run()
