@@ -1,9 +1,15 @@
 # MoonAudio
-MoonAudio is a simple music player in lua
+MoonAudio is a simple media player in lua
 
-## Screenshot
+# Screenshot
 
-![screenshot](https://i.imgur.com/MackJ7y.png)
+- Music Player
+
+![screenshot](https://i.imgur.com/Q5x0yYp.png)
+
+- Video Player
+
+![screenshot](https://i.imgur.com/VvfJ9OY.png)
 
 ## Dependencies
 
