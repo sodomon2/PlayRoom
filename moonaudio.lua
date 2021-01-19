@@ -30,6 +30,7 @@ conf				= inifile:load(('%s/moonaudio.ini'):format(dir))
 
 require('src.moonaudio-playlist')
 require('src.moonaudio-app')
+require('src.moonaudio-volume')
 
 function ui.btn_about:on_clicked()
 	ui.about_window:run()
