@@ -82,17 +82,6 @@ function get_music()
 	end
 end
 
-function ui.btn_play:on_clicked()
-	stop_media()
-	local id_music, title_music, duration_music = get_music()
-	play.uri = ('file://%s/%s'):format(conf.general.playlist,title_music)
-	play_media()
-end
-
-function ui.btn_stop:on_clicked()
-	stop_media()
-end
-
 pipeline:add_many(play)
 pipeline.bus:add_watch(GLib.PRIORITY_DEFAULT, bus_callback)
 
