@@ -56,6 +56,9 @@ function stop_media()
 	ui.playlist_slider:set_value(0)
 	ui.img_media_state.icon_name = 'media-playback-start'
 	ui.playlist_duration.label = '0:00 / 0:00'
+	ui.media_stack:set_visible_child_name('treeview')
+	ui.btn_forward.sensitive = true
+	ui.btn_back.sensitive = false
 end
 
 local function bus_callback(bus, message)

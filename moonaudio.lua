@@ -17,6 +17,10 @@ GLib	  = lgi.GLib
 GObject   = lgi.GObject
 Gtk       = lgi.require('Gtk', '3.0')
 Gst       = lgi.require("Gst", "1.0")
+GdkX11    = lgi.GdkX11
+if tonumber(Gst._version) >= 1.0 then
+	GstVideo = lgi.GstVideo
+end
 
 builder   = Gtk.Builder()
 app		  = Gtk.Application()
@@ -52,6 +56,7 @@ function ui.main_window:on_destroy()
 end
 
 function app:on_activate()
+	ui.btn_back.sensitive = false
 	ui.entry_directory.text = conf.general.playlist
 	ui.main_window:present()
 	self:add_window(ui.main_window)

@@ -243,6 +243,42 @@ Copyright © 2021 </property>
         <property name="subtitle" translatable="yes">simple music player in lua</property>
         <property name="show_close_button">True</property>
         <child>
+          <object class="GtkButton" id="btn_back">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="relief">none</property>
+            <child>
+              <object class="GtkImage">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="stock">gtk-go-back</property>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="btn_forward">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="relief">none</property>
+            <child>
+              <object class="GtkImage">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="stock">gtk-go-forward</property>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="position">2</property>
+          </packing>
+        </child>
+        <child>
           <object class="GtkMenuButton" id="btn_menu">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
@@ -268,54 +304,78 @@ Copyright © 2021 </property>
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <child>
-          <object class="GtkScrolledWindow">
+          <object class="GtkStack" id="media_stack">
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
-            <property name="shadow_type">in</property>
+            <property name="can_focus">False</property>
+            <property name="transition_duration">500</property>
+            <property name="transition_type">crossfade</property>
+            <property name="interpolate_size">True</property>
             <child>
-              <object class="GtkTreeView" id="playlist_view">
+              <object class="GtkScrolledWindow">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="model">playlist</property>
-                <property name="search_column">0</property>
-                <child internal-child="selection">
-                  <object class="GtkTreeSelection"/>
-                </child>
+                <property name="can_focus">True</property>
+                <property name="shadow_type">in</property>
                 <child>
-                  <object class="GtkTreeViewColumn" id="id">
-                    <property name="title" translatable="yes">ID</property>
-                    <child>
-                      <object class="GtkCellRendererText" id="tree_id"/>
-                      <attributes>
-                        <attribute name="text">0</attribute>
-                      </attributes>
+                  <object class="GtkTreeView" id="playlist_view">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="model">playlist</property>
+                    <property name="search_column">0</property>
+                    <child internal-child="selection">
+                      <object class="GtkTreeSelection"/>
                     </child>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkTreeViewColumn" id="title">
-                    <property name="title" translatable="yes">Title</property>
-                    <property name="expand">True</property>
                     <child>
-                      <object class="GtkCellRendererText" id="tree_title"/>
-                      <attributes>
-                        <attribute name="text">1</attribute>
-                      </attributes>
+                      <object class="GtkTreeViewColumn" id="id">
+                        <property name="title" translatable="yes">ID</property>
+                        <child>
+                          <object class="GtkCellRendererText" id="tree_id"/>
+                          <attributes>
+                            <attribute name="text">0</attribute>
+                          </attributes>
+                        </child>
+                      </object>
                     </child>
-                  </object>
-                </child>
-                <child>
-                  <object class="GtkTreeViewColumn" id="duration">
-                    <property name="title" translatable="yes">Duration</property>
                     <child>
-                      <object class="GtkCellRendererText" id="tree_duration"/>
-                      <attributes>
-                        <attribute name="text">2</attribute>
-                      </attributes>
+                      <object class="GtkTreeViewColumn" id="title">
+                        <property name="title" translatable="yes">Title</property>
+                        <property name="expand">True</property>
+                        <child>
+                          <object class="GtkCellRendererText" id="tree_title"/>
+                          <attributes>
+                            <attribute name="text">1</attribute>
+                          </attributes>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkTreeViewColumn" id="duration">
+                        <property name="title" translatable="yes">Duration</property>
+                        <child>
+                          <object class="GtkCellRendererText" id="tree_duration"/>
+                          <attributes>
+                            <attribute name="text">2</attribute>
+                          </attributes>
+                        </child>
+                      </object>
                     </child>
                   </object>
                 </child>
               </object>
+              <packing>
+                <property name="name">treeview</property>
+                <property name="title" translatable="yes">treeview</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkDrawingArea" id="videos">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+              </object>
+              <packing>
+                <property name="name">videos_view</property>
+                <property name="title" translatable="yes">videos_view</property>
+                <property name="position">1</property>
+              </packing>
             </child>
           </object>
           <packing>
@@ -366,7 +426,7 @@ Copyright © 2021 </property>
                       <object class="GtkLabel" id="playlist_duration">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">0:00 / 2:58</property>
+                        <property name="label" translatable="yes">0:00 / 0:00</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>

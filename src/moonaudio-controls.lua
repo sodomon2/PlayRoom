@@ -29,6 +29,34 @@ end
 function ui.btn_play:on_clicked()
 	stop_media()
 	local id_music, title_music, duration_music = get_music()
+	local ext = title_music:match('%w+$')
+	if ext == 'mp4' then
+		ui.media_stack:set_visible_child_name('videos_view')
+		ui.btn_back.sensitive = true
+		ui.btn_forward.sensitive = false
+	end
 	play.uri = ('file://%s/%s'):format(conf.general.playlist,title_music)
 	play_media()
+end
+
+function ui.btn_back:on_clicked()
+	ui.media_stack:set_visible_child_name('treeview')
+	ui.btn_forward.sensitive = true
+	self.sensitive = false
+end
+
+function ui.btn_forward:on_clicked()
+	ui.media_stack:set_visible_child_name('videos_view')
+	ui.btn_back.sensitive = true
+	self.sensitive = false
+end
+
+function ui.videos:on_realize()
+	print(self.window:get_xid())
+	play:set_window_handle(self.window:get_xid())
+end
+
+-- paint the background
+function ui.videos:on_draw(cr)
+	cr:paint()
 end
