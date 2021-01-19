@@ -43,6 +43,10 @@ function quit()
 	os.exit(0)
 end 
 
+function ui.btn_quit:on_clicked()
+	quit()
+end
+
 function ui.main_window:on_destroy()
 	quit()
 end
