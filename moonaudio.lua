@@ -1,5 +1,13 @@
 #!/usr/bin/env lua
 
+--[[--
+ @package   MoonAudio
+ @filename  moonaudio.lua
+ @version   1.0
+ @autor     The Moonsteal Team
+ @date      18.01.2021 19:09:28 -04
+]]
+
 require 'libraries.middleclass'
 utils     = require 'libraries.utils'
 inifile   = require 'libraries.inifile'
@@ -23,6 +31,11 @@ conf				= inifile:load(('%s/moonaudio.ini'):format(dir))
 require('src.moonaudio-playlist')
 require('src.moonaudio-app')
 
+function ui.btn_about:on_clicked()
+	ui.about_window:run()
+	ui.about_window:hide()
+end
+
 function quit()
 	Gtk.main_quit()
 	main_loop:quit()
@@ -34,6 +47,7 @@ function ui.main_window:on_destroy()
 end
 
 function app:on_activate()
+	ui.entry_directory.text = conf.general.playlist
 	ui.main_window:present()
 	self:add_window(ui.main_window)
 end

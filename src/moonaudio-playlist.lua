@@ -1,3 +1,11 @@
+--[[--
+ @package   MoonAudio
+ @filename  moonaudio-playlist.lua
+ @version   1.0
+ @autor     The Moonsteal Team
+ @date      18.01.2021 20:05:49 -04
+]]
+
 function scandir(directory)
 	local pfile = assert(io.popen(("find '%s' -mindepth 1 -maxdepth 1 -printf '%%f\\0'"):format(directory), 'r'))
 	local list = pfile:read('*a')
@@ -19,7 +27,7 @@ function list_view()
 			ui.playlist:append({
 				i,
 				item,
-				'nil'
+				'[WIP]'
 			})
 		end
 	end
@@ -32,9 +40,12 @@ end
 
 function ui.btn_dialog_settings_ok:on_clicked()
 	list_view()
+	conf.general.playlist = ui.entry_directory.text
+	inifile:save(('%s/moonaudio.ini'):format(dir), conf)
 	ui.dialog_settings:hide()
 end
 
 function ui.btn_dialog_settings_cancel:on_clicked()
 	ui.dialog_settings:hide()
 end
+
