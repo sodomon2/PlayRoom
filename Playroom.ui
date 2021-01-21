@@ -223,6 +223,12 @@ Copyright © 2021 </property>
       </object>
     </child>
   </object>
+  <object class="GtkStatusIcon" id="tray">
+    <property name="icon_name">multimedia</property>
+    <property name="has_tooltip">True</property>
+    <property name="tooltip_text" translatable="yes">Playroom</property>
+    <property name="title" translatable="yes">Playroom</property>
+  </object>
   <object class="GtkAdjustment" id="volume_adjustment">
     <property name="upper">100</property>
     <property name="value">100</property>

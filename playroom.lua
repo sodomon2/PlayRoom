@@ -35,6 +35,7 @@ conf				= inifile:load(('%s/playroom.ini'):format(dir))
 require('src.playroom-playlist')
 require('src.playroom-app')
 require('src.playroom-controls')
+require('src.playroom-tray')
 
 function ui.btn_about:on_clicked()
 	ui.about_window:run()
