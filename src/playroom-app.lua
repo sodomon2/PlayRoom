@@ -29,6 +29,7 @@ end
 
 local btn_play_trigger = true
 function play_media()
+	ui.playlist_slider.sensitive = true
 	ui.img_media_state.icon_name = 'media-playback-pause'
 
 	GLib.timeout_add_seconds(GLib.PRIORITY_DEFAULT, 1,function()
@@ -59,6 +60,7 @@ function stop_media()
 	ui.media_stack:set_visible_child_name('treeview')
 	ui.btn_forward.sensitive = true
 	ui.btn_back.sensitive = false
+	ui.playlist_slider.sensitive = false
 end
 
 local function bus_callback(bus, message)

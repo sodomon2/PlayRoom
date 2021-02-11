@@ -416,6 +416,7 @@ Copyright © 2021 </property>
                     <child>
                       <object class="GtkScale" id="playlist_slider">
                         <property name="visible">True</property>
+                        <property name="sensitive">False</property>
                         <property name="can_focus">False</property>
                         <property name="adjustment">playlist_adjustment</property>
                         <property name="restrict_to_fill_level">False</property>
