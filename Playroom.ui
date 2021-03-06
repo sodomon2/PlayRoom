@@ -6,12 +6,12 @@
     <property name="can_focus">False</property>
     <property name="type_hint">dialog</property>
     <property name="program_name">Playroom</property>
-    <property name="copyright" translatable="yes">The Moonsteal Team
+    <property name="copyright" translatable="yes">Díaz Urbaneja Víctor Diego Alejandro
 Copyright © 2021 </property>
     <property name="comments" translatable="yes">A Simple Media Player</property>
-    <property name="website">https://github.com/moonsteal/MoonAudio</property>
+    <property name="website">https://github.com/sodomon2/PlayRoom</property>
     <property name="website_label" translatable="yes">Github</property>
-    <property name="authors">The Moonsteal Team</property>
+    <property name="authors">Díaz Urbaneja Víctor Diego Alejandro</property>
     <property name="logo_icon_name">multimedia</property>
     <child type="titlebar">
       <placeholder/>
