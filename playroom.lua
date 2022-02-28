@@ -61,7 +61,7 @@ function app:on_activate()
 	ui.entry_directory.text = conf.general.playlist
 	ui.main_window:present()
 	self:add_window(ui.main_window)
-  list_view()
+	list_view()
 end
 
 app:run()

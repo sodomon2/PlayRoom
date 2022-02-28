@@ -1,15 +1,9 @@
 # PlayRoom
-PlayRoom is a simple media player in lua
+PlayRoom is a simple music player in lua
 
 # Screenshot
 
-- Music Player
-
 ![screenshot](https://github.com/sodomon2/project-screenshot/blob/master/PlayRoom/screenshot1.png?raw=true)
-
-- Video Player
-
-![screenshot](https://github.com/sodomon2/project-screenshot/blob/master/PlayRoom/screenshot2.png?raw=true)
 
 ## Dependencies
 
