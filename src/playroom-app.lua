@@ -11,20 +11,26 @@ play        = Gst.ElementFactory.make('playbin', 'play')
 main_loop   = GLib.MainLoop()
 
 function ns_to_str (ns)
-	if (not ns) then return nil end
-	seconds = ns / Gst.SECOND
-	minutes = math.floor(seconds / 60)
-	seconds = math.floor(seconds - (minutes * 60))
-	str = minutes .. ':' .. seconds
-	return str
+  if (not ns) or (ns <= 0) then
+    return "00:00:00"
+  end
+
+  local total_seconds = math.floor(ns / Gst.SECOND)
+  local hours = math.floor(total_seconds / 3600)
+  local minutes = math.floor((total_seconds % 3600) / 60)
+  local seconds = math.floor(total_seconds % 60)
+
+  return string.format("%02d:%02d:%02d", hours, minutes, seconds)
 end
 
 function get_duration_position()
-	position_ns = pipeline:query_position(Gst.Format.TIME)
-	position 	= position_ns and ns_to_str(position_ns) or '0:00'
-	duration_ns = pipeline:query_duration(Gst.Format.TIME)
-	duration 	= duration_ns and ns_to_str(duration_ns) or '0:00'
-	return position .. ' / ' .. duration
+  local position_ns = pipeline:query_position(Gst.Format.TIME)
+  local duration_ns = pipeline:query_duration(Gst.Format.TIME)
+
+  local position = ns_to_str(position_ns)
+  local duration = ns_to_str(duration_ns)
+
+  return position .. ' / ' .. duration
 end
 
 local btn_play_trigger = true
@@ -56,7 +62,7 @@ function stop_media()
 	main_loop:quit()
 	ui.playlist_slider:set_value(0)
 	ui.img_media_state.icon_name = 'media-playback-start'
-	ui.playlist_duration.label = '0:00 / 0:00'
+	ui.playlist_duration.label = '00:00:00 / 00:00:00'
 	ui.media_stack:set_visible_child_name('treeview')
 	ui.btn_forward.sensitive = true
 	ui.btn_back.sensitive = false

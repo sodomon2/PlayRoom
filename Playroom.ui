@@ -434,7 +434,7 @@ Copyright © 2021 </property>
                       <object class="GtkLabel" id="playlist_duration">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="label" translatable="yes">0:00 / 0:00</property>
+                        <property name="label" translatable="yes">00:00:00 / 00:00:00</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>

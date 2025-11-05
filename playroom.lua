@@ -8,29 +8,30 @@
  @date      18.01.2021 19:09:28 -04
 ]]
 
-utils     = require 'libraries.utils'
-inifile   = require 'libraries.inifile'
+utils     	= require 'libraries.utils'
+inifile   	= require 'libraries.inifile'
 
-lgi       = require 'lgi'
-GLib	    = lgi.require('GLib', '2.0')
-Gio 			= lgi.require('Gio', '2.0')
-GObject   = lgi.require('GObject', '2.0')
-Gtk       = lgi.require('Gtk', '3.0')
-Gst       = lgi.require('Gst', '1.0')
-GdkX11    = lgi.require('GdkX11', '3.0')
+lgi       	= require 'lgi'
+GLib				= lgi.require('GLib', '2.0')
+Gio					= lgi.require('Gio', '2.0')
+GObject			= lgi.require('GObject', '2.0')
+Gtk					= lgi.require('Gtk', '3.0')
+Gst					= lgi.require('Gst', '1.0')
+GstPbutils	= lgi.require('GstPbutils', '1.0')
+GdkX11			= lgi.require('GdkX11', '3.0')
 if tonumber(Gst._version) >= 1.0 then
-	GstVideo = lgi.GstVideo
+	GstVideo 	= lgi.GstVideo
 end
 
-builder   = Gtk.Builder()
-app		    = Gtk.Application()
+builder			= Gtk.Builder()
+app					= Gtk.Application()
 
 builder:add_from_file('Playroom.ui')
 ui = builder.objects
 
 utils:create_config('playroom','playroom.ini')
-dir 				= ('%s/playroom'):format(GLib.get_user_config_dir())
-conf				= inifile:load(('%s/playroom.ini'):format(dir))
+dir				= ('%s/playroom'):format(GLib.get_user_config_dir())
+conf			= inifile:load(('%s/playroom.ini'):format(dir))
 
 require('src.playroom-playlist')
 require('src.playroom-app')

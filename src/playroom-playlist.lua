@@ -7,6 +7,18 @@
 ]]
  local content = {}
  local playlist = {}
+ local discoverer = GstPbutils.Discoverer()
+
+local function get_file_duration(uri)
+	-- TODO: Implement discoverer:discover_uri_async, discoverer:discover_uri is blocking
+	local info = discoverer:discover_uri(uri, 5 * Gst.SECOND) 
+	if info then
+		local duration_ns = info:get_duration()
+		return ns_to_str(duration_ns)
+	else
+		return "N/A"
+	end
+end
 
 -- thank https://gist.github.com/Miqueas/6b75b25731f9a785678951cfcef8c002
 local function scandir(Path, Tab)
@@ -20,7 +32,7 @@ local function scandir(Path, Tab)
 	while info do
 		local name = info:get_name()
 		local file_type = info:get_file_type()
-		local full_path = path .. info:get_name()
+		local full_path = path .. name
 
 		if file_type == "DIRECTORY" then
 			Tab[count] = {
@@ -38,12 +50,16 @@ local function scandir(Path, Tab)
 		info = enum:next_file()
 		count = count + 1
 		if file_type == 'DIRECTORY' then
-		else
-			table.insert(playlist, {
-				full_path = full_path,
-				name = name
-			})
-		end
+    else
+      local file_gio = Gio.File.new_for_path(full_path)
+      local uri = file_gio:get_uri()
+      local duration = get_file_duration(uri)
+      table.insert(playlist, {
+        full_path = full_path,
+        name = name,
+        duration = duration
+      })
+    end
 	end
 end
 
@@ -51,18 +67,17 @@ function list_view()
 	if ( ui.entry_directory.text ~= "" ) then
 		scandir(ui.entry_directory.text, content)
 		ui.playlist:clear()
-		for i, item in pairs(playlist) do
-			ui.playlist:append({
-				i,
-				item.name,
-				'[WIP]'
-			})
+		for i, song in pairs(playlist) do
+			local iter = ui.playlist:append()
+			ui.playlist:set(iter,
+				{ i, song.name, song.duration }
+			)
 		end
 	end
 end
 
 function get_music()
-	local id, title, duration = get_data()
+	local id, title = get_data()
 	local ext = title:match('%w+$')
 	if ext == 'mp4' then
 		ui.media_stack:set_visible_child_name('videos_view')
