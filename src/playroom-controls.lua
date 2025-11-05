@@ -21,9 +21,13 @@ function ui.volume_control:on_value_changed()
 	inifile:save(('%s/playroom.ini'):format(dir), conf)
 end
 
-
-function ui.btn_stop:on_clicked()
-	stop_media()
+function ui.btn_volumen:on_clicked()
+	visible = not visible
+	if visible then
+		ui.volumen_reveal:set_reveal_child(true)
+	else
+		ui.volumen_reveal:set_reveal_child(false)
+	end
 end
 
 function ui.btn_play:on_clicked()
@@ -44,12 +48,12 @@ function ui.btn_forward:on_clicked()
 	self.sensitive = false
 end
 
-function ui.videos:on_realize()
+function ui.media:on_realize()
 	print(self.window:get_xid())
 	play:set_window_handle(self.window:get_xid())
 end
 
 -- paint the background
-function ui.videos:on_draw(cr)
+function ui.media:on_draw(cr)
 	cr:paint()
 end

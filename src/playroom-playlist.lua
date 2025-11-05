@@ -5,18 +5,58 @@
  @autor     The Moonsteal Team
  @date      18.01.2021 20:05:49 -04
 ]]
- local content = {}
- local playlist = {}
- local discoverer = GstPbutils.Discoverer()
+local content = {}
+local playlist = {}
+local discoverer = GstPbutils.Discoverer()
 
 local function get_file_duration(uri)
 	-- TODO: Implement discoverer:discover_uri_async, discoverer:discover_uri is blocking
-	local info = discoverer:discover_uri(uri, 5 * Gst.SECOND) 
+	local info = discoverer:discover_uri(uri, 5 * Gst.SECOND)
 	if info then
 		local duration_ns = info:get_duration()
 		return ns_to_str(duration_ns)
 	else
 		return "N/A"
+	end
+end
+
+local function get_mimetype(path)
+  local file = Gio.File.new_for_path(path)
+  local file = file:query_info("standard::content-type", Gio.FileQueryInfoFlags.NONE)
+	print(file:get_content_type())
+end
+
+local function get_music_data(path)
+	local id, title = get_data()
+	local file = Gio.File.new_for_path(path)
+	local uri = file:get_uri()
+
+	local info = discoverer:discover_uri(uri, 5 * Gst.SECOND)
+	local tags = info:get_tags()
+	local preview = tags:get_sample("image") or tags:get_sample("preview-image")
+
+	local artist = (tags ~= nil) and tags:get_string("artist") or 'N/A'
+	local name = (tags ~= nil) and tags:get_string("title") or title
+	ui.artist_label.label = artist
+	ui.song_label.label = name
+
+	ui.artist_label:set_ellipsize(Pango.EllipsizeMode.END)
+	ui.song_label:set_ellipsize(Pango.EllipsizeMode.END)
+	ui.song_label:set_max_width_chars(50)
+
+	if preview then
+		local map    = preview:get_buffer():map(Gst.MapFlags.READ)
+		local bytes  = GLib.Bytes.new(map.data)
+		local stream = Gio.MemoryInputStream.new_from_bytes(bytes)
+
+		local pix = GdkPixbuf.Pixbuf.new_from_stream(stream)
+		local pix = pix:scale_simple(42, 42, GdkPixbuf.InterpType.BILINEAR)
+
+		stream:close()
+		ui.song_cover:set_from_pixbuf(pix)
+	else
+		local pix = GdkPixbuf.Pixbuf.new_from_file_at_size('../data/image/no-cover.png', 42, 42)
+		ui.song_cover:set_from_pixbuf(pix)
 	end
 end
 
@@ -79,6 +119,11 @@ end
 function get_music()
 	local id, title = get_data()
 	local ext = title:match('%w+$')
+
+	get_mimetype(playlist[id].full_path)
+	get_music_data(playlist[id].full_path)
+	ui.player_reveal:set_reveal_child(true)
+
 	if ext == 'mp4' then
 		ui.media_stack:set_visible_child_name('videos_view')
 		ui.btn_back.sensitive = true

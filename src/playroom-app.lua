@@ -67,6 +67,7 @@ function stop_media()
 	ui.btn_forward.sensitive = true
 	ui.btn_back.sensitive = false
 	ui.playlist_slider.sensitive = false
+	ui.player_reveal:set_reveal_child(false)
 end
 
 local function bus_callback(bus, message)
@@ -75,10 +76,17 @@ local function bus_callback(bus, message)
 		pipeline.state = 'READY'
 	elseif message.type.EOS then
 		print 'end of stream'
+		ui.player_reveal:set_reveal_child(false)
 		stop_media()
 	end
 
 	return true
+end
+
+function ui.playlist_view:on_row_activated()
+	stop_media()
+	get_music()
+	play_media()
 end
 
 function get_data()

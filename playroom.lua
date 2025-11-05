@@ -19,6 +19,8 @@ Gtk					= lgi.require('Gtk', '3.0')
 Gst					= lgi.require('Gst', '1.0')
 GstPbutils	= lgi.require('GstPbutils', '1.0')
 GdkX11			= lgi.require('GdkX11', '3.0')
+Pango				= lgi.require('Pango', '1.0')
+GdkPixbuf		= lgi.require('GdkPixbuf', '2.0')
 if tonumber(Gst._version) >= 1.0 then
 	GstVideo 	= lgi.GstVideo
 end
