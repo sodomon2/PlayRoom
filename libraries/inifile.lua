@@ -23,7 +23,7 @@
 -- It has never been that simple to use INI files with Lua.
 --@author Dynodzzo
 
-local LIP     = class('LIP')
+local LIP     = {}
 
 
 -- Remueve espacios iniciales y finales de una cadena

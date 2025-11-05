@@ -6,7 +6,7 @@
  @date      01.08.2020 19:22:11 -04
 --]]
 
-local utils = class('utils')
+local utils = {}
 
 function utils:create_config(dir,file)
 	local config_dir = ('%s/%s'):format(GLib.get_user_config_dir(), dir)
