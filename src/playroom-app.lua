@@ -75,7 +75,7 @@ local function bus_callback(bus, message)
 	return true
 end
 
-function get_music()
+function get_data()
 	local selection = ui.playlist_view:get_selection()
 	selection.mode = 'SINGLE'
 	local model, iter = selection:get_selected()

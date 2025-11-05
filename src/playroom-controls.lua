@@ -28,14 +28,7 @@ end
 
 function ui.btn_play:on_clicked()
 	stop_media()
-	local id_music, title_music, duration_music = get_music()
-	local ext = title_music:match('%w+$')
-	if ext == 'mp4' then
-		ui.media_stack:set_visible_child_name('videos_view')
-		ui.btn_back.sensitive = true
-		ui.btn_forward.sensitive = false
-	end
-	play.uri = ('file://%s/%s'):format(conf.general.playlist,title_music)
+	get_music()
 	play_media()
 end
 

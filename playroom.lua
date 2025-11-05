@@ -8,22 +8,22 @@
  @date      18.01.2021 19:09:28 -04
 ]]
 
-require 'libraries.middleclass'
 utils     = require 'libraries.utils'
 inifile   = require 'libraries.inifile'
 
 lgi       = require 'lgi'
-GLib	  = lgi.GLib
-GObject   = lgi.GObject
+GLib	    = lgi.require('GLib', '2.0')
+Gio 			= lgi.require('Gio', '2.0')
+GObject   = lgi.require('GObject', '2.0')
 Gtk       = lgi.require('Gtk', '3.0')
-Gst       = lgi.require("Gst", "1.0")
-GdkX11    = lgi.GdkX11
+Gst       = lgi.require('Gst', '1.0')
+GdkX11    = lgi.require('GdkX11', '3.0')
 if tonumber(Gst._version) >= 1.0 then
 	GstVideo = lgi.GstVideo
 end
 
 builder   = Gtk.Builder()
-app		  = Gtk.Application()
+app		    = Gtk.Application()
 
 builder:add_from_file('Playroom.ui')
 ui = builder.objects
@@ -46,7 +46,7 @@ function quit()
 	Gtk.main_quit()
 	main_loop:quit()
 	os.exit(0)
-end 
+end
 
 function ui.btn_quit:on_clicked()
 	quit()
@@ -58,6 +58,7 @@ end
 
 function app:on_activate()
 	ui.btn_back.sensitive = false
+	ui.btn_forward.sensitive = false
 	ui.entry_directory.text = conf.general.playlist
 	ui.main_window:present()
 	self:add_window(ui.main_window)

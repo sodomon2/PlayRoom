@@ -5,31 +5,73 @@
  @autor     The Moonsteal Team
  @date      18.01.2021 20:05:49 -04
 ]]
+ local content = {}
+ local playlist = {}
 
-function scandir(directory)
-	local pfile = assert(io.popen(("find '%s' -mindepth 1 -maxdepth 1 -printf '%%f\\0'"):format(directory), 'r'))
-	local list = pfile:read('*a')
-	pfile:close()
+-- thank https://gist.github.com/Miqueas/6b75b25731f9a785678951cfcef8c002
+local function scandir(Path, Tab)
+  local file = Gio.File.new_for_path(Path)
+  local enum = file:enumerate_children("standard::name", Gio.FileQueryInfoFlags.NONE)
+  local path = file:get_path() .. "/"
 
-	local folders = {}
+  local info = enum:next_file()
+  local count = 1
 
-	for filename in string.gmatch(list, '[^%z]+') do
-		table.insert(folders, filename)
+	while info do
+		local name = info:get_name()
+		local file_type = info:get_file_type()
+		local full_path = path .. info:get_name()
+
+		if file_type == "DIRECTORY" then
+			Tab[count] = {
+				Path = full_path,
+				Files = {}
+			}
+			scandir(full_path, Tab[count].Files)
+		else
+			Tab[count] = {
+				Path = full_path,
+				Name = name
+			}
+		end
+
+		info = enum:next_file()
+		count = count + 1
+		if file_type == 'DIRECTORY' then
+		else
+			table.insert(playlist, {
+				full_path = full_path,
+				name = name
+			})
+		end
 	end
-
-	return folders
 end
 
 function list_view()
 	if ( ui.entry_directory.text ~= "" ) then
+		scandir(ui.entry_directory.text, content)
 		ui.playlist:clear()
-		for i, item in pairs(scandir(ui.entry_directory.text)) do
+		for i, item in pairs(playlist) do
 			ui.playlist:append({
 				i,
-				item,
+				item.name,
 				'[WIP]'
 			})
 		end
+	end
+end
+
+function get_music()
+	local id, title, duration = get_data()
+	local ext = title:match('%w+$')
+	if ext == 'mp4' then
+		ui.media_stack:set_visible_child_name('videos_view')
+		ui.btn_back.sensitive = true
+		ui.btn_forward.sensitive = false
+	else
+		ui.btn_back.sensitive = false
+		ui.btn_forward.sensitive = false
+		play.uri = ('file://%s'):format(playlist[id].full_path)
 	end
 end
 
