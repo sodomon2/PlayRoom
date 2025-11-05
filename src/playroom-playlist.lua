@@ -21,9 +21,9 @@ local function get_file_duration(uri)
 end
 
 local function get_mimetype(path)
-  local file = Gio.File.new_for_path(path)
-  local file = file:query_info("standard::content-type", Gio.FileQueryInfoFlags.NONE)
-	print(file:get_content_type())
+	local file = Gio.File.new_for_path(path)
+	local file = file:query_info("standard::content-type", Gio.FileQueryInfoFlags.NONE)
+	return file:get_content_type()
 end
 
 local function get_music_data(path)
@@ -118,13 +118,12 @@ end
 
 function get_music()
 	local id, title = get_data()
-	local ext = title:match('%w+$')
-
-	get_mimetype(playlist[id].full_path)
+	local mime = get_mimetype(playlist[id].full_path):match('^(%w+)/')
+	print(mime)
 	get_music_data(playlist[id].full_path)
 	ui.player_reveal:set_reveal_child(true)
 
-	if ext == 'mp4' then
+	if mime == 'video' then
 		ui.media_stack:set_visible_child_name('videos_view')
 		ui.btn_back.sensitive = true
 		ui.btn_forward.sensitive = false

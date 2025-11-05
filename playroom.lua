@@ -22,7 +22,7 @@ GdkX11			= lgi.require('GdkX11', '3.0')
 Pango				= lgi.require('Pango', '1.0')
 GdkPixbuf		= lgi.require('GdkPixbuf', '2.0')
 if tonumber(Gst._version) >= 1.0 then
-	GstVideo 	= lgi.GstVideo
+	GstVideo = lgi.require('GstVideo','1.0')
 end
 
 builder			= Gtk.Builder()
